@@ -3,23 +3,18 @@
 
 #include <iostream>
 #include <algorithm>
+#include <cstdlib>
+#include <list>
 
 template< typename T >
-int & easyfind(T & const lhs, int n)
+int const & easyfind(T & lhs, int n)
 {
-    typename T::iterator it = T.begin();
-    typename T::iterator ite = T.end();
-    return std::find(it, ite, n);
+    typename T::const_iterator it = lhs.begin();
+
+    it = std::find(lhs.begin(), lhs.end(), n);
+    if (it == lhs.end())
+        throw std::runtime_error("not found");
+    return *it;
 }
-
-template< typename T >
-class notFoundException : public std::exception
-{
-    public :
-        virtual const char* what() const throw()
-        {
-            return "Element not found exception!";
-        }
-};
 
 #endif
