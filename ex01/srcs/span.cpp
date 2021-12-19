@@ -22,18 +22,12 @@ span::span(void) : _vector(0), _size(0)
 
 span::span(unsigned int n) : _size(n)
 {
-    std::vector<int> myvector;
-    int *p = 0;
-    
-    p = myvector.get_allocator().allocate(_size);
+    _p = _vector.get_allocator().allocate(_size);
 }
 
 span::span(span const & rhs) : _size(rhs._size)
 {
-    std::vector<int> myvector;
-    int *p = 0;
-    
-    p = myvector.get_allocator().allocate(_size);
+    _p = _vector.get_allocator().allocate(_size);
 }
 
 span & span::operator=(span const & rhs)
@@ -44,7 +38,7 @@ span & span::operator=(span const & rhs)
 
 span::~span(void)
 {
-
+    _vector.get_allocator().deallocate(_p,_size);
 }
 
 unsigned int span::size() const
@@ -54,43 +48,33 @@ unsigned int span::size() const
 
 void span::addNumber(int n)
 {
-    try
-    {
-        _vector.push_back(n);
-    }
-    catch (std::bad_alloc &e)
-    {
-        std::cout << e.what() << std::endl;
-    }
+    if (_vector.size() >= _size)
+        throw fillArrayException();
+    _vector.push_back(n);
 }
 
 int span::shortestSpan()
 {
-    try
+    int min_span = 0;
+
+    if (_size < 2)
+        throw emptyArrayException();
+    std::sort(_vector.begin(), _vector.end()); 
+    min_span = _vector[_vector.size() - 1] - _vector[_vector.size() - 2];
+    for (unsigned long i = _vector.size() - 2; i - 2 > 0; i--)
     {
-        std::sort(_vector.begin(), _vector.end());  
+        if (_vector[i] - _vector[i - 1])
+            min_span = _vector[i] - _vector[i - 1];
     }
-    catch (std::logic_error &e)
-    {
-        std::cout << e.what() << std::endl;
-    }
-    return _vector.begin() + 1 - _vector.begin();
+    return min_span;
 }
 
 int span::longestSpan()
 {
-    int min = 0;
-    int max = 0;
-
-    try
-    {
-        min = *std::min_element(_vector.rend(), _vector.rbegin());
-        max = *std::max_element(_vector.rend(), _vector.rbegin());
-    }
-    catch (std::logic_error &e)
-    {
-        std::cout << e.what() << std::endl;
-    }
+    if (_size < 2)
+        throw emptyArrayException();
+    int min = *std::min_element(_vector.begin(), _vector.end());
+    int max = *std::max_element(_vector.begin(), _vector.end());
     return max - min;
 }
 

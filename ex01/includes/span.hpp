@@ -16,6 +16,7 @@ class span
     private:
         std::vector<int> _vector;
         unsigned int _size;
+        int* _p;
         class OutOfLimitsException : public std::exception
         {
             public:
