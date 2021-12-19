@@ -22,12 +22,24 @@ span::span(void) : _vector(0), _size(0)
 
 span::span(unsigned int n) : _size(n)
 {
+    _vector = std::vector<int>(_size);
+    /*
     _p = _vector.get_allocator().allocate(_size);
+    for (unsigned int i = 0; i < _size; i++)
+        _vector.get_allocator().construct(&_p[i],0);
+      std::cout << "The allocated array contains:";
+    for (unsigned int i=0; i<_size; i++) std::cout << ' ' << _p[i];
+    std::cout << '\n';*/
 }
+/*
+span::span(unsigned int n, int min, int max) : _size(n)
+{
+    span(n);
+}*/
 
 span::span(span const & rhs) : _size(rhs._size)
 {
-    _p = _vector.get_allocator().allocate(_size);
+    new (this) span(_size);
 }
 
 span & span::operator=(span const & rhs)
@@ -38,7 +50,9 @@ span & span::operator=(span const & rhs)
 
 span::~span(void)
 {
-    _vector.get_allocator().deallocate(_p, _size);
+    /*for (unsigned int i = 0; i < _size; i++)
+        _vector.get_allocator().destroy(&_p[i]);
+    _vector.get_allocator().deallocate(_p, _size);*/
 }
 
 unsigned int span::size() const
@@ -46,25 +60,27 @@ unsigned int span::size() const
     return _size;
 }
 
-void span::addNumber(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end, int n)
+void span::addNumber(int n)
 {
-    if (_vector.size() >= _size)
-        throw fillArrayException();
-    for_each(begin, end, ((this->_vector.push_back)(n)));
+    //if (_vector.size() >= _size)
+        //throw fillArrayException();
+    _vector.push_back(n);
 }
 
 int span::shortestSpan()
 {
     int min_span = 0;
 
+    std::cout << "SIZE = " << _size << std::endl;
     if (_size < 2)
         throw emptyArrayException();
-    std::sort(_vector.begin(), _vector.end()); 
-    min_span = _vector[_vector.size() - 1] - _vector[_vector.size() - 2];
-    for (unsigned long i = _vector.size() - 2; i - 2 > 0; i--)
+    std::sort(_vector.begin(), _vector.end());
+    min_span = std::abs(_vector[0] - _vector[1]);
+    for (unsigned long i = 0; i + 1 < _size; i++)
     {
-        if (_vector[i] - _vector[i - 1])
-            min_span = _vector[i] - _vector[i - 1];
+        std::cout << "essai" << std::endl;
+        if (std::abs(_vector[i] - _vector[i + 1]) < min_span)
+            min_span = std::abs(min_span = _vector[i] - _vector[i + 1]);
     }
     return min_span;
 }
@@ -81,4 +97,20 @@ int span::longestSpan()
 std::vector<int> & span::getVector()
 {
     return _vector;
+}
+
+int & span::getP()
+{
+    return *_p;
+}
+
+void span::addNumbers(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end)
+{
+	std::generate(begin, end, randomNumber);
+}
+
+void span::printVector()
+{
+    for (unsigned int i = 0; i < _size; i++)
+        std::cout << _vector[i] << std::endl;
 }

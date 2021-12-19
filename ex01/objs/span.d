@@ -1,1 +1,1 @@
-objs/span.o: srcs/span.cpp includes/span.hpp
+objs/span.o: srcs/span.cpp includes/span.hpp includes/utils.hpp

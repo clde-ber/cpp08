@@ -10,13 +10,15 @@
 #include <algorithm>
 #include <numeric>
 #include <string>
+#include <cmath>
+
+#include "utils.hpp"
 
 class span
 {
     private:
         std::vector<int> _vector;
         unsigned int _size;
-        int* _p;
         class OutOfLimitsException : public std::exception
         {
             public:
@@ -35,14 +37,19 @@ class span
     public:
         span(void);
         span(unsigned int n);
+        span(unsigned int n, int min, int max);
         span(span const & rhs);
         span & operator=(span const & rhs);
         ~span(void);
+        int* _p;
         unsigned int size() const;
-        void addNumber(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end, int n);
+        void addNumber(int n);
         int shortestSpan();
         int longestSpan();
         std::vector<int> & getVector();
+        int & getP();
+        void addNumbers(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end);
+        void printVector();
 };
 
 #endif
