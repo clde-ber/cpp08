@@ -39,7 +39,7 @@ class span
         span & operator=(span const & rhs);
         ~span(void);
         unsigned int size() const;
-        void addNumber(int n);
+        void addNumber(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end, int n);
         int shortestSpan();
         int longestSpan();
         std::vector<int> & getVector();

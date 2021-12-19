@@ -46,11 +46,11 @@ unsigned int span::size() const
     return _size;
 }
 
-void span::addNumber(int n)
+void span::addNumber(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end, int n)
 {
     if (_vector.size() >= _size)
-    throw fillArrayException();
-    _vector.push_back(n);
+        throw fillArrayException();
+    for_each(begin, end, ((this->_vector.push_back)(n)));
 }
 
 int span::shortestSpan()
