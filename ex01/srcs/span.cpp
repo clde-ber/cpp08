@@ -62,8 +62,8 @@ unsigned int span::size() const
 
 void span::addNumber(int n)
 {
-    //if (_vector.size() >= _size)
-        //throw fillArrayException();
+    if (_vector.size() >= _size)
+        throw fillArrayException();
     _vector.push_back(n);
 }
 
@@ -97,11 +97,6 @@ int span::longestSpan()
 std::vector<int> & span::getVector()
 {
     return _vector;
-}
-
-int & span::getP()
-{
-    return *_p;
 }
 
 void span::addNumbers(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end)
