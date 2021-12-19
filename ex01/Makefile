@@ -2,6 +2,7 @@
 
 NAME	=	span
 LIST	=	main \
+			span \
 			
 HEADER	=	-I includes/
 CFLAGS	=	-Wall -Wextra -Werror -MMD -std=c++98

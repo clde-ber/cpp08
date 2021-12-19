@@ -16,12 +16,18 @@
 
 }*/
 
+int randomNumber ()
+{
+	return (std::rand()%100);
+}
+
 int main()
 {
 	std::srand(std::time(NULL));
 
 	span span(10000);
-	std::for_each(span.getvector().begin(), span.getvector().end(), span.addNumber(rand()));
+	std::generate(span.getvector().begin(), span.getvector().end(), randomNumber);
+	// std::for_each(span.getvector().begin(), span.getvector().end(), span.addNumber(rand()));
 	std::cout << "short span = " << span.shortestSpan() << std::endl;
 	std::cout << "long span = " << span.longestSpan() << std::endl;
 	std::cin.get();

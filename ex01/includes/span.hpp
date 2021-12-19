@@ -6,6 +6,10 @@
 #include <vector>
 #include <ctime>
 #include <algorithm>
+#include <iterator>
+#include <algorithm>
+#include <numeric>
+#include <string>
 
 class span
 {
@@ -15,26 +19,17 @@ class span
         class OutOfLimitsException : public std::exception
         {
             public:
-                virtual const char* what() const throw()
-                {
-                    return "Array element exception: out of limits!";
-                }
+                virtual const char* what() const throw();
         };
         class fillArrayException : public std::exception
         {
             public:
-                virtual const char* what() const throw()
-                {
-                    return "array already full";
-                }
+                virtual const char* what() const throw();
         };
         class emptyArrayException : public std::exception
         {
             public:
-                virtual const char* what() const throw()
-                {
-                    return "array empty";
-                }
+                virtual const char* what() const throw();
         };
     public:
         span(void);

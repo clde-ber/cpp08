@@ -47,12 +47,12 @@ span::~span(void)
 
 }
 
-unsigned int size() const
+unsigned int span::size() const
 {
     return _size;
 }
 
-void addNumber(int n)
+void span::addNumber(int n)
 {
     try
     {
@@ -64,32 +64,32 @@ void addNumber(int n)
     }
 }
 
-int shortestSpan()
+int span::shortestSpan()
 {
     try
     {
-        _vector.sort();
+        std::sort(_vector.begin(), _vector.end());  
     }
     catch (std::logic_error &e)
     {
-        std::cout << e.what << std::endl;
+        std::cout << e.what() << std::endl;
     }
-    return _vector.begin() + 1 - vector._begin;
+    return _vector.begin() + 1 - _vector.begin();
 }
 
-int longestSpan()
+int span::longestSpan()
 {
     int min = 0;
     int max = 0;
 
     try
     {
-        min = _vector.min_element();
-        max = _vector.max_element();
+        min = *std::min_element(_vector.rend(), _vector.rbegin());
+        max = *std::max_element(_vector.rend(), _vector.rbegin());
     }
     catch (std::logic_error &e)
     {
-        std::cout << e.what << std::endl;
+        std::cout << e.what() << std::endl;
     }
     return max - min;
 }
