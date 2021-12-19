@@ -38,7 +38,7 @@ span & span::operator=(span const & rhs)
 
 span::~span(void)
 {
-    _vector.get_allocator().deallocate(_p,_size);
+    _vector.get_allocator().deallocate(_p, _size);
 }
 
 unsigned int span::size() const
@@ -49,7 +49,7 @@ unsigned int span::size() const
 void span::addNumber(int n)
 {
     if (_vector.size() >= _size)
-        throw fillArrayException();
+    throw fillArrayException();
     _vector.push_back(n);
 }
 
@@ -78,7 +78,7 @@ int span::longestSpan()
     return max - min;
 }
 
-std::vector<int> & span::getvector()
+std::vector<int> & span::getVector()
 {
     return _vector;
 }

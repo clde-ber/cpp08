@@ -42,7 +42,7 @@ class span
         void addNumber(int n);
         int shortestSpan();
         int longestSpan();
-        std::vector<int> & getvector();
+        std::vector<int> & getVector();
 };
 
 #endif
