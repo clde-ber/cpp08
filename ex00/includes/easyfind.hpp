@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <list>
+#include <vector>
 
 template< typename T >
 int const & easyfind(T & lhs, int n)
