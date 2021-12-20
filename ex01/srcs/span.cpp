@@ -1,64 +1,64 @@
 #include "span.hpp"
 
-const char* span::OutOfLimitsException::what() const throw()
+const char* Span::OutOfLimitsException::what() const throw()
 {
-    return "Array element exception: out of limits!";
+    return "vector element exception: out of limits!";
 }
 
-const char* span::fillArrayException::what() const throw()
+const char* Span::fillArrayException::what() const throw()
 {
-    return "array already full";
+    return "vector size exception: already full!";
 }
 
-const char* span::emptyArrayException::what() const throw()
+const char* Span::notEnoughNumbersException::what() const throw()
 {
-    return "array empty";
+    return "not enough numbers exception: cannot make span!";
 }
 
-span::span(void) : _size(0)
+Span::Span(void) : _size(0)
 {
 
 }
 
-span::span(unsigned int n) : _size(0)
+Span::Span(unsigned int n) : _size(0)
 {
     _vector = std::vector<int>(n);
 }
 
-span::span(span const & rhs) : _size(rhs._size)
+Span::Span(Span const & rhs) : _size(rhs._size)
 {
-    new (this) span(_size);
+    new (this) Span(_size);
 }
 
-span & span::operator=(span const & rhs)
+Span & Span::operator=(Span const & rhs)
 {
-    new (this) span(rhs);
+    new (this) Span(rhs);
     return *this;
 }
 
-span::~span(void)
+Span::~Span(void)
 {
 }
 
-unsigned int span::size() const
+unsigned int Span::size() const
 {
     return _size;
 }
 
-void span::addNumber(int n)
+void Span::addNumber(int n)
 {
     if (_size + 1 > _vector.size())
         throw fillArrayException();
-    _vector.push_back(n);
+    _vector[_size] = n;
     _size++;
 }
 
-int span::shortestSpan()
+int Span::shortestSpan()
 {
     int min_span = 0;
 
     if (_size < 2)
-        throw emptyArrayException();
+        throw notEnoughNumbersException();
     std::sort(_vector.begin(), _vector.end());
     min_span = std::abs(_vector[0] - _vector[1]);
     for (unsigned long i = 0; i + 1 < _size; i++)
@@ -69,41 +69,35 @@ int span::shortestSpan()
     return min_span;
 }
 
-int span::longestSpan()
+int Span::longestSpan()
 {
     if (_size < 2)
-        throw emptyArrayException();
+        throw notEnoughNumbersException();
     int min = *std::min_element(_vector.begin(), _vector.end());
     int max = *std::max_element(_vector.begin(), _vector.end());
     return max - min;
 }
 
-std::vector<int> & span::getVector()
+std::vector<int> & Span::getVector()
 {
     return _vector;
 }
 
-void span::addNumbers(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end)
+void Span::addNumbers(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end)
 {
-    std::cout << "vector size " << _vector.size() << std::endl;
-    std::cout << "size " << _size << std::endl;
-    if (_size + _vector.size() > _vector.size())
+    if (_size > 0)
         throw fillArrayException();
     std::generate(begin, end, randomNumber);
     _size += _vector.size();
 }
 
-void span::addNumbersInRange(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end)
+void Span::printVector()
 {
-    std::cout << "vector size " << _vector.size() << std::endl;
-    std::cout << "size " << _size << std::endl;
-    if (_size + _vector.size() > _vector.size())
-        throw fillArrayException();
-    std::generate(begin, end, randomNumberInRange);
-}
-
-void span::printVector()
-{
-    for (unsigned int i = 0; i < _size; i++)
-        std::cout << _vector[i] << std::endl;
+    std::vector<int>::iterator it = _vector.begin();
+    std::vector<int>::iterator ite = _vector.end();
+    while (it != ite)
+    {
+        std::cout << *it << std::endl;
+        it++;
+    }
 }

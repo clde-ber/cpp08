@@ -15,7 +15,7 @@
 int randomNumber();
 int randomNumberInRange();
 
-class span
+class Span
 {
     private:
         std::vector<int> _vector;
@@ -30,18 +30,18 @@ class span
             public:
                 virtual const char* what() const throw();
         };
-        class emptyArrayException : public std::exception
+        class notEnoughNumbersException : public std::exception
         {
             public:
                 virtual const char* what() const throw();
         };
     public:
-        span(void);
-        span(unsigned int n);
-        span(unsigned int n, int min, int max);
-        span(span const & rhs);
-        span & operator=(span const & rhs);
-        ~span(void);
+        Span(void);
+        Span(unsigned int n);
+        Span(unsigned int n, int min, int max);
+        Span(Span const & rhs);
+        Span & operator=(Span const & rhs);
+        ~Span(void);
         unsigned int size() const;
         void addNumber(int n);
         int shortestSpan();

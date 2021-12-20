@@ -18,73 +18,7 @@ class Mutantstack : public std::stack<T>
 {
     public :
         typedef typename std::stack<T>::container_type::iterator iterator;
-
-	    iterator begin()
-        {
-            return this->c.begin();
-        }
-	    iterator end()
-        {
-            return this->c.end();
-        }
-        iterator rbegin()
-        {
-            return this->c.end();
-        }
-        iterator rend()
-        {
-            return this->c.begin();
-        }
-        iterator cbegin()
-        {
-            return this->c.begin();
-        }
-        iterator cend()
-        {
-            return this->c.end();
-        }
-        iterator crbegin()
-        {
-            return this->c.end();
-        }
-        iterator crend()
-        {
-            return this->c.begin();
-        }
-        iterator& operator++()
-        {
-            iterator tmp = this->c.begin();
-            this->c.begin()++;
-            return tmp;
-        }
-        iterator& operator--()
-        {
-            iterator tmp = this->c.end();
-            this->c.end()--;
-            return tmp;
-        }
-        iterator operator++(int)
-        {
-            ++this->c.begin();
-            return this->c.begin();
-        }
-        iterator operator--(int)
-        {
-            --this->c.end();
-            return this->c.end();
-        }
-        bool operator==(iterator other) const
-        {
-            return *this == *other;
-        }
-        bool operator!=(iterator other) const
-        {
-            return !(*this == *other);
-        }
-        Mutantstack<T> operator*() const
-        {
-            return *this;
-        }
+        typedef typename std::stack<T>::container_type::reverse_iterator reverse_iterator;
         Mutantstack(void) {}
         Mutantstack(Mutantstack const & rhs) 
         {
@@ -97,13 +31,22 @@ class Mutantstack : public std::stack<T>
             return *this;
         }
         ~Mutantstack(void) {}
+	    iterator begin()
+        {
+            return this->c.begin();
+        }
+	    iterator end()
+        {
+            return this->c.end();
+        }
+        reverse_iterator rbegin()
+        {
+            return this->c.rbegin();
+        }
+        reverse_iterator rend()
+        {
+            return this->c.rend();
+        }
 };
-
-// template< typename T >
-// std::ostream & operator<<(std::ostream & o, Mutantstack<T> const & rhs)
-// {
-//     o << rhs._iterator;
-//     return o;
-// }
 
 #endif
