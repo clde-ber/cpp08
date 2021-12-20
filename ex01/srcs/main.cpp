@@ -64,5 +64,18 @@ int main()
 	{
 		std::cout << e.what() << std::endl;
 	}
+	Span bigSpan(10000);
+	try
+	{
+		bigSpan.addNumbers(bigSpan.getVector().begin(), bigSpan.getVector().end());
+		std::cout << "********** printvector **********" << std::endl;
+		bigSpan.printVector();
+		std::cout << "short span = " << bigSpan.shortestSpan() << std::endl;
+		std::cout << "long span = " << bigSpan.longestSpan() << std::endl;
+	}
+	catch(std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 	return 0;
 }
