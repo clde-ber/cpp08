@@ -17,27 +17,27 @@ template< typename T >
 class Mutantstack : public std::stack<T>
 {
     public :
-        typedef Mutantstack<T>* iterator;
-        iterator _iterator;
-        iterator& operator++() {iterator tmp = *this; this->_iterator++; return tmp;}
-        iterator& operator--() {iterator tmp = *this; this->_iterator--; return tmp;}
-        iterator operator++(int) {++this->_iterator; return *this;}
-        iterator operator--(int) {--this->_iterator; return *this;}
-        bool operator==(iterator other) const {return *this->_iterator == *other;}
-        bool operator!=(iterator other) const {return !(*this->_iterator == *other);}
-        Mutantstack<T> operator*() const {return *this->_iterator;}
-        Mutantstack(void) : _iterator(0) {}
-        Mutantstack(Mutantstack const & rhs) : _iterator(rhs._iterator) {}
+        typedef typename std::stack<T>::container_type::iterator iterator;
+
+	    iterator begin() { return this->c.begin(); }
+	    iterator end() { return this->c.end(); }
+        iterator rbegin() {return this->c.begin();}
+        iterator rend() {return this->c.end();}
+        iterator cbegin() {return this->c.begin();}
+        iterator cend() {return this->c.end();}
+        iterator crbegin() {return this->c.begin();}
+        iterator crend() {return this->c.end();}
+        iterator& operator++() {iterator tmp = this->c.begin(); this->c.begin()++; return tmp;}
+        iterator& operator--() {iterator tmp = this->c.end();; this->c.end()--; return tmp;}
+        iterator operator++(int) {++this->c.begin(); return this->c.begin();}
+        iterator operator--(int) {--this->c.end();; return this->c.end();}
+        bool operator==(iterator other) const {return *this == *other;}
+        bool operator!=(iterator other) const {return !(*this == *other);}
+        Mutantstack<T> operator*() const {return *this;}
+        Mutantstack(void) {}
+        Mutantstack(Mutantstack const & rhs) {(void)rhs; new (this) Mutantstack();}
         Mutantstack & operator=(Mutantstack const & rhs) {new (this) Mutantstack(rhs); return *this;}
         ~Mutantstack(void) {}
-        iterator begin() {return this->_iterator;}
-        iterator end() {std::cout << this->size() << std::endl; return this->_iterator + this->size() >= this->_iterator? this->_iterator+this->size() : this->_iterator-this->size();}
-        iterator rbegin() {return this;}
-        iterator rend() {return this + this->size() >= this? this-this->size() : this+this->size();}
-        iterator cbegin() {return this;}
-        iterator cend() {return this + this->size() >= this? this+this->size() : this-this->size();}
-        iterator crbegin() {return this;}
-        iterator crend() {return this + this->size() >= this? this-this->size() : this+this->size();}
 };
 
 template< typename T >
