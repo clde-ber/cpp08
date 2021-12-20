@@ -12,7 +12,8 @@
 #include <string>
 #include <cmath>
 
-#include "utils.hpp"
+int randomNumber();
+int randomNumberInRange();
 
 class span
 {
@@ -41,14 +42,13 @@ class span
         span(span const & rhs);
         span & operator=(span const & rhs);
         ~span(void);
-        int* _p;
         unsigned int size() const;
         void addNumber(int n);
         int shortestSpan();
         int longestSpan();
         std::vector<int> & getVector();
-        int & getP();
         void addNumbers(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end);
+        void addNumbersInRange(std::vector<int>::iterator const & begin, std::vector<int>::iterator const & end);
         void printVector();
 };
 
